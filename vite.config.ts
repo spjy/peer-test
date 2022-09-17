@@ -1,15 +1,22 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import type { UserConfig } from 'vite';
-import globals from 'rollup-plugin-node-globals';
-import nodePolyfill from 'rollup-plugin-polyfill-node';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { defineConfig } from 'vite';
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
+import { nodeModulesPolyfillPlugin } from 'esbuild-plugins-node-modules-polyfill';
 
-const config: UserConfig = {
-	plugins: [sveltekit(), globals(), nodePolyfill({
-		include: ['events', 'util', 'process']
-	}), nodeResolve({
-		preferBuiltins: false
-	})]
-};
-
-export default config;
+export default defineConfig({
+	plugins: [sveltekit()],
+	optimizeDeps: {
+		esbuildOptions: {
+			plugins: [
+				nodeModulesPolyfillPlugin(),
+				NodeGlobalsPolyfillPlugin({
+					process: true,
+					buffer: true
+				})
+			],
+			define: {
+				global: 'globalThis'
+			}
+		}
+	}
+});
