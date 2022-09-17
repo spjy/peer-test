@@ -1,5 +1,10 @@
 <script>
 	import { peer } from '$lib/peer';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		peer();
+	});
 </script>
 
 <h1>Welcome to your library project</h1>

@@ -1,6 +1,6 @@
-import Peer from 'simple-peer'
+import Peer from 'simple-peer';
 
 export const peer = () => {
-	const peer = new Peer()	
-	console.log('hey')
-}
+	const peer = new Peer();
+	console.log('hey');
+};
